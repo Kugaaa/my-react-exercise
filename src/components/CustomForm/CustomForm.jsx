@@ -10,6 +10,7 @@ const CustomForm = ({addTask}) => {
         addTask({
             id: Date.now(),
             name: task,
+            emoji: "",
             completed: false
         });
         setTask("");
@@ -27,12 +28,12 @@ const CustomForm = ({addTask}) => {
                     required
                     autoFocus
                     maxLength={50}
-                    placeholder="Enter Task"
+                    placeholder="输入 Todo 名称"
                 />
                 <label
                     htmlFor="task"
                     className="label"
-                >Enter Task</label>
+                >{"输入 Todo"}</label>
             </div>
             <button
                 className="btn"

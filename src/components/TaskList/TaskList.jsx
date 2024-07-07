@@ -4,7 +4,7 @@ import TaskItem from "../TaskItem/TaskItem.jsx";
 // styles
 import styles from './TaskList.module.css';
 
-const TaskList = ({tasks, deleteTask, completeTask, enterEditMode}) => {
+const TaskList = ({tasks, deleteTask, completeTask, enterEditMode, enterEmojiSelectMode}) => {
     return (
         <div className={styles.tasks}>
             {tasks
@@ -17,6 +17,7 @@ const TaskList = ({tasks, deleteTask, completeTask, enterEditMode}) => {
                             deleteTask={deleteTask}
                             completeTask={completeTask}
                             enterEditMode={enterEditMode}
+                            enterEmojiSelectMode={enterEmojiSelectMode}
                         />
                     ))
             }

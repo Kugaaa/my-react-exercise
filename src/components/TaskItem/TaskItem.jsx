@@ -4,12 +4,13 @@ import {useState} from "react";
 import {CheckIcon} from '@heroicons/react/24/outline';
 import {PencilIcon} from '@heroicons/react/24/outline';
 import {TrashIcon} from '@heroicons/react/24/outline';
+import {FaceSmileIcon} from '@heroicons/react/24/outline';
 
 
 // styles
 import styles from "./TaskItem.module.css"
 
-const TaskItem = ({task, deleteTask, completeTask, enterEditMode}) => {
+const TaskItem = ({task, deleteTask, completeTask, enterEditMode, enterEmojiSelectMode}) => {
 
     const [checked, setChecked] = useState(task.completed)
 
@@ -33,6 +34,7 @@ const TaskItem = ({task, deleteTask, completeTask, enterEditMode}) => {
                     className={styles.label}
                     onClick={() => completeTask(task.id)}
                 >
+                    {task.emoji}{" "}
                     {task.name}
                     <p className={styles.checkmark}>
                         <CheckIcon strokeWidth={2} width={24} height={24}/>
@@ -46,6 +48,14 @@ const TaskItem = ({task, deleteTask, completeTask, enterEditMode}) => {
                     onClick={() => enterEditMode(task)}
                 >
                     <PencilIcon width={24} height={24}/>
+                </button>
+
+                <button
+                    className="btn"
+                    aria-label={`Select ${task.name} emoji`}
+                    onClick={() => enterEmojiSelectMode(task)}
+                >
+                    <FaceSmileIcon width={24} height={24}/>
                 </button>
 
                 <button

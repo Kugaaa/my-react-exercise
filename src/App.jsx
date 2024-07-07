@@ -4,17 +4,22 @@ import {useState} from 'react'
 import CustomForm from "./components/CustomForm/CustomForm.jsx";
 import TaskList from "./components/TaskList/TaskList.jsx";
 import EditForm from "./components/EditForm/EditForm.jsx";
-import useLocalStorage from "./hooks/useLocalStorage.jsx";
+import EmojiSelector from "./components/Emoji/EmojiSelector.jsx";
 
 // custom hooks
-
+import useLocalStorage from "./hooks/useLocalStorage.jsx";
 
 function App() {
 
     const [tasks, setTasks] = useLocalStorage("my-todo.tasks", [])
     const [preFocusEl, setPreFocusEl] = useState(null);
+
+    // state for editing tasks
     const [editedTask, setEditedTask] = useState(null);
     const [isEditing, setIsEditing] = useState(null);
+
+    // state for emoji selection
+    const [isEmojiSelecting, setIsEmojiSelecting] = useState(null);
 
     const addTask = (task) => {
         setTasks([...tasks, task]);
@@ -58,6 +63,30 @@ function App() {
         preFocusEl && preFocusEl.focus();
     }
 
+    const updateEmoji = (emoji) => {
+        setTasks(
+            tasks.map(
+                task => (
+                    task.id === editedTask.id ? {...task, emoji} : task
+                )
+            )
+        )
+        closeEmojiSelectMode();
+    }
+
+    const enterEmojiSelectMode = (task) => {
+        setIsEmojiSelecting(true);
+        setEditedTask(task)
+        setPreFocusEl(document.activeElement);
+    }
+
+    const closeEmojiSelectMode = () => {
+        setIsEmojiSelecting(false);
+        setEditedTask(null);
+        preFocusEl && preFocusEl.focus();
+    }
+
+
     return (
         <div className="container">
             <header>
@@ -72,10 +101,21 @@ function App() {
                     </EditForm>
                 )
             }
+            {
+                isEmojiSelecting && (
+                    <EmojiSelector updateEmoji={updateEmoji} closeEmojiSelectMode={closeEmojiSelectMode}/>
+                )
+            }
             <CustomForm addTask={addTask}/>
             {tasks &&
-                <TaskList tasks={tasks} deleteTask={deleteTask} completeTask={completeTask}
-                          enterEditMode={enterEditMode}/>}
+                <TaskList
+                    tasks={tasks}
+                    deleteTask={deleteTask}
+                    completeTask={completeTask}
+                    enterEditMode={enterEditMode}
+                    enterEmojiSelectMode={enterEmojiSelectMode}
+                />
+            }
         </div>
     )
 }
