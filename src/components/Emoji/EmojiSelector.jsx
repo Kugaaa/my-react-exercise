@@ -27,7 +27,11 @@ const EmojiSelector = ({updateEmoji, closeEmojiSelectMode}) => {
                 e.target === e.currentTarget && closeEmojiSelectMode()
             }}
         >
-            <EmojiPicker onEmojiClick={onEmojiClick}/>
+            <EmojiPicker
+                lazyLoadEmojis={true}
+                skinTonesDisabled={true}
+                onEmojiClick={onEmojiClick}
+            />
         </div>
     )
 }
